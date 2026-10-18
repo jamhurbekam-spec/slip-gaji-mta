@@ -1,0 +1,219 @@
+{
+  "entities": {
+    "CompanyProfile": {
+      "title": "CompanyProfile",
+      "description": "Profil perusahaan dan identitas usaha termasuk logo, tanda tangan pimpinan, dan stempel.",
+      "type": "object",
+      "properties": {
+        "namaPerusahaan": {
+          "type": "string",
+          "description": "Nama resmi perusahaan atau CV"
+        },
+        "alamat": {
+          "type": "string",
+          "description": "Alamat jalan perusahaan"
+        },
+        "kecamatan": {
+          "type": "string",
+          "description": "Kecamatan domisili perusahaan"
+        },
+        "kabupatenKota": {
+          "type": "string",
+          "description": "Kabupaten atau Kota"
+        },
+        "noTelepon": {
+          "type": "string",
+          "description": "Nomor telepon kontak perusahaan"
+        },
+        "logoUrl": {
+          "type": "string",
+          "description": "URL gambar atau data base64 logo perusahaan"
+        },
+        "ttdUrl": {
+          "type": "string",
+          "description": "URL gambar tanda tangan pimpinan"
+        },
+        "stempelUrl": {
+          "type": "string",
+          "description": "URL gambar stempel toko"
+        },
+        "namaPimpinan": {
+          "type": "string",
+          "description": "Nama lengkap pimpinan yang bertanda tangan"
+        },
+        "updatedAt": {
+          "type": "number",
+          "description": "Timestamp terakhir diperbarui"
+        }
+      }
+    },
+    "Employee": {
+      "title": "Employee",
+      "description": "Data identitas karyawan",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID unik karyawan"
+        },
+        "nama": {
+          "type": "string",
+          "description": "Nama lengkap karyawan"
+        },
+        "nik": {
+          "type": "string",
+          "description": "Nomor Induk Karyawan atau KTP"
+        },
+        "jabatan": {
+          "type": "string",
+          "description": "Posisi atau jabatan pekerjaan"
+        },
+        "nomorSlipGaji": {
+          "type": "string",
+          "description": "Nomor urut slip gaji karyawan"
+        },
+        "gajiPokok": {
+          "type": "number",
+          "description": "Nominal gaji pokok default karyawan"
+        },
+        "createdAt": {
+          "type": "number",
+          "description": "Timestamp saat karyawan ditambahkan"
+        }
+      },
+      "required": ["id", "nama", "jabatan"]
+    },
+    "SlipGaji": {
+      "title": "SlipGaji",
+      "description": "Dokumen slip gaji karyawan",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "ID unik dokumen slip gaji"
+        },
+        "employeeId": {
+          "type": "string",
+          "description": "ID referensi karyawan"
+        },
+        "nama": {
+          "type": "string",
+          "description": "Nama karyawan pada slip"
+        },
+        "jabatan": {
+          "type": "string",
+          "description": "Jabatan karyawan pada slip"
+        },
+        "nik": {
+          "type": "string",
+          "description": "NIK karyawan"
+        },
+        "nomorSlip": {
+          "type": "string",
+          "description": "Nomor slip gaji"
+        },
+        "tanggal": {
+          "type": "string",
+          "description": "Tanggal pembuatan slip (YYYY-MM-DD)"
+        },
+        "periode": {
+          "type": "string",
+          "description": "Bulan periode gaji"
+        },
+        "gajiPokok": {
+          "type": "number",
+          "description": "Nominal gaji pokok"
+        },
+        "uangMakanPendapatan": {
+          "type": "number",
+          "description": "Uang makan pendapatan"
+        },
+        "transport": {
+          "type": "number",
+          "description": "Tunjangan transport"
+        },
+        "thr": {
+          "type": "number",
+          "description": "Tunjangan Hari Raya"
+        },
+        "bonus": {
+          "type": "number",
+          "description": "Bonus karyawan"
+        },
+        "lemburan": {
+          "type": "number",
+          "description": "Upah lembur"
+        },
+        "jamLembur": {
+          "type": "number",
+          "description": "Jumlah jam lembur"
+        },
+        "masukKerja": {
+          "type": "number",
+          "description": "Jumlah kehadiran masuk kerja (hari)"
+        },
+        "pinjaman": {
+          "type": "number",
+          "description": "Potongan pinjaman/kasbon"
+        },
+        "bpjsKetenagakerjaan": {
+          "type": "number",
+          "description": "Potongan BPJS Ketenagakerjaan"
+        },
+        "pph21": {
+          "type": "number",
+          "description": "Potongan Pajak PPh 21"
+        },
+        "lainLain": {
+          "type": "number",
+          "description": "Potongan lain-lain"
+        },
+        "uangMakanPotongan": {
+          "type": "number",
+          "description": "Potongan uang makan"
+        },
+        "totalPendapatan": {
+          "type": "number",
+          "description": "Total seluruh komponen pendapatan"
+        },
+        "totalPotongan": {
+          "type": "number",
+          "description": "Total seluruh komponen pemotongan"
+        },
+        "gajiBersih": {
+          "type": "number",
+          "description": "Gaji bersih diterima (Total Pendapatan - Total Potongan)"
+        },
+        "createdAt": {
+          "type": "number",
+          "description": "Waktu pembuatan record"
+        },
+        "updatedAt": {
+          "type": "number",
+          "description": "Waktu perubahan terakhir"
+        }
+      },
+      "required": ["id", "nama", "periode", "tanggal", "gajiBersih"]
+    }
+  },
+  "firestore": {
+    "/company/profile": {
+      "schema": {
+        "$ref": "#/entities/CompanyProfile"
+      },
+      "description": "Data profil dan pengaturan perusahaan"
+    },
+    "/employees/{employeeId}": {
+      "schema": {
+        "$ref": "#/entities/Employee"
+      },
+      "description": "Data master karyawan"
+    },
+    "/slips/{slipId}": {
+      "schema": {
+        "$ref": "#/entities/SlipGaji"
+      },
+      "description": "Dokumen riwayat slip gaji"
+    }
+  }
+}

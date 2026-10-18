@@ -1,0 +1,6 @@
+{
+  "name": "Slip Gaji MTA",
+  "description": "Aplikasi pembuatan dan cetak slip gaji karyawan profesional dengan format tabel presisi, penyimpanan lokal, ekspor PDF, dan berbagi via WhatsApp.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

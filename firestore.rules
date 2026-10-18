@@ -1,0 +1,29 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny Fallback
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Test connection endpoint
+    match /test/{docId} {
+      allow read, write: if true;
+    }
+
+    // Profil Perusahaan & Pengaturan
+    match /company/{docId} {
+      allow read, write: if true;
+    }
+
+    // Master Data Karyawan
+    match /employees/{employeeId} {
+      allow read, write: if true;
+    }
+
+    // Dokumen Slip Gaji Karyawan
+    match /slips/{slipId} {
+      allow read, write: if true;
+    }
+  }
+}
