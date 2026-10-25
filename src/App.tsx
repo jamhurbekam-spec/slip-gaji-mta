@@ -37,6 +37,7 @@ import { EmployeeManager } from './components/EmployeeManager';
 import { CompanySettings } from './components/CompanySettings';
 import { SlipModal } from './components/SlipModal';
 import { RekapView } from './components/RekapView';
+import { PWAInstallBanner } from './components/PWAInstallBanner';
 import { FilePlus2, ListFilter, CheckCircle, AlertCircle, Info } from 'lucide-react';
 
 export default function App() {
@@ -386,6 +387,9 @@ export default function App() {
         employeeCount={employees.length}
         isOnline={isOnline}
       />
+
+      {/* PWA Install Banner */}
+      <PWAInstallBanner />
 
       {/* Main Content Area */}
       <main className="flex-1 max-w-4xl w-full mx-auto px-3 sm:px-6 pt-4 sm:pt-6">

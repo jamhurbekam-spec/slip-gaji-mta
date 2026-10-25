@@ -1,6 +1,7 @@
 import React from 'react';
 import { ActiveTab } from '../types';
 import { FileText, Users, Settings2, Receipt, FileSpreadsheet } from 'lucide-react';
+import { PWAHeaderButton } from './PWAInstallBanner';
 
 interface NavbarProps {
   activeTab: ActiveTab;
@@ -43,7 +44,9 @@ export const Navbar: React.FC<NavbarProps> = ({
             </div>
           </div>
 
-          <div className="hidden sm:flex items-center gap-1 bg-slate-800/80 p-1 rounded-xl border border-slate-700/60 text-xs">
+          <div className="flex items-center gap-2">
+            <PWAHeaderButton />
+            <div className="hidden sm:flex items-center gap-1 bg-slate-800/80 p-1 rounded-xl border border-slate-700/60 text-xs">
             <button
               onClick={() => setActiveTab('slip')}
               className={`px-3 py-1.5 rounded-lg font-semibold transition-all ${
@@ -87,7 +90,8 @@ export const Navbar: React.FC<NavbarProps> = ({
             </button>
           </div>
         </div>
-      </header>
+      </div>
+    </header>
 
       {/* Bottom Navigation Bar for Mobile (Android Native feel - 4 Menus) */}
       <nav className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-slate-200 px-1 py-1 shadow-lg">

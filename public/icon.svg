@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1e3a8a" />
+      <stop offset="50%" stop-color="#2563eb" />
+      <stop offset="100%" stop-color="#4f46e5" />
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#0f172a" flood-opacity="0.4" />
+    </filter>
+  </defs>
+  <!-- Background with rounded corners -->
+  <rect width="512" height="512" rx="108" fill="url(#bgGrad)" />
+  
+  <!-- Outer decorative card / receipt -->
+  <g filter="url(#shadow)">
+    <rect x="96" y="76" width="320" height="360" rx="28" fill="#ffffff" />
+    <!-- Receipt top band -->
+    <path d="M96 104 C96 88.536 108.536 76 124 76 H388 C403.464 76 416 88.536 416 104 V136 H96 Z" fill="#0284c7" />
+    
+    <!-- Receipt tooth bottom decoration -->
+    <path d="M96 408 L116 436 L136 408 L156 436 L176 408 L196 436 L216 408 L236 436 L256 408 L276 436 L296 408 L316 436 L336 408 L356 436 L376 408 L396 436 L416 408 V404 H96 Z" fill="#0284c7" opacity="0.15" />
+    
+    <!-- Currency / Rupiah / Payroll badge in header -->
+    <circle cx="256" cy="180" r="38" fill="#eff6ff" stroke="#2563eb" stroke-width="4" />
+    <text x="256" y="193" font-family="Arial, sans-serif" font-weight="900" font-size="34" fill="#1d4ed8" text-anchor="middle">Rp</text>
+    
+    <!-- Receipt Lines -->
+    <rect x="146" y="246" width="220" height="14" rx="7" fill="#cbd5e1" />
+    <rect x="146" y="276" width="160" height="12" rx="6" fill="#e2e8f0" />
+    <rect x="146" y="302" width="220" height="12" rx="6" fill="#e2e8f0" />
+    
+    <!-- Total highlight line -->
+    <rect x="146" y="336" width="220" height="2" fill="#cbd5e1" />
+    <rect x="146" y="352" width="130" height="16" rx="8" fill="#10b981" />
+    <rect x="296" y="352" width="70" height="16" rx="8" fill="#047857" />
+  </g>
+</svg>
