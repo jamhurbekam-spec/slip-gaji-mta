@@ -39,7 +39,7 @@ export const SlipModal: React.FC<SlipModalProps> = ({
   // Responsive scale state for Android / mobile screen preview without horizontal slide
   const [scale, setScale] = useState<number>(1);
   const [isFitScreen, setIsFitScreen] = useState<boolean>(true);
-  const [docHeight, setDocHeight] = useState<number>(750);
+  const [docHeight, setDocHeight] = useState<number>(850);
   const containerRef = useRef<HTMLDivElement>(null);
   const slipWrapperRef = useRef<HTMLDivElement>(null);
 
@@ -49,31 +49,52 @@ export const SlipModal: React.FC<SlipModalProps> = ({
 
     const calculateScale = () => {
       if (!containerRef.current) return;
-      const containerWidth = containerRef.current.clientWidth;
-      // Account for 16px horizontal margins inside the modal body
-      const availableWidth = Math.max(280, containerWidth - 16);
-      const targetWidth = 680; // Standard desktop document width
+      const clientWidth = containerRef.current.clientWidth;
+      // Account for 16px horizontal padding inside container
+      const availableWidth = Math.max(200, clientWidth - 16);
+      const targetWidth = 680; // Standard document width
 
       if (availableWidth < targetWidth && isFitScreen) {
-        const calculatedScale = Math.max(0.42, Math.min(1, availableWidth / targetWidth));
+        const calculatedScale = Math.min(1, availableWidth / targetWidth);
         setScale(calculatedScale);
       } else {
         setScale(1);
       }
 
-      // Update document height for proportional wrapper
+      // Update document height for proportional wrapper to ensure full visibility from header to footer
       if (slipWrapperRef.current) {
-        const h = slipWrapperRef.current.offsetHeight;
+        const h = Math.max(
+          slipWrapperRef.current.scrollHeight,
+          slipWrapperRef.current.offsetHeight,
+          slipWrapperRef.current.clientHeight,
+          800
+        );
         if (h > 0) setDocHeight(h);
       }
     };
 
     calculateScale();
-    const timer = setTimeout(calculateScale, 60);
+    const t1 = setTimeout(calculateScale, 50);
+    const t2 = setTimeout(calculateScale, 200);
+    const t3 = setTimeout(calculateScale, 600);
+
+    const resizeObserver = new ResizeObserver(() => {
+      calculateScale();
+    });
+
+    if (containerRef.current) {
+      resizeObserver.observe(containerRef.current);
+    }
+    if (slipWrapperRef.current) {
+      resizeObserver.observe(slipWrapperRef.current);
+    }
 
     window.addEventListener('resize', calculateScale);
     return () => {
-      clearTimeout(timer);
+      clearTimeout(t1);
+      clearTimeout(t2);
+      clearTimeout(t3);
+      resizeObserver.disconnect();
       window.removeEventListener('resize', calculateScale);
     };
   }, [isOpen, isFitScreen, slip, company]);
@@ -250,28 +271,34 @@ export const SlipModal: React.FC<SlipModalProps> = ({
         {/* On Android/mobile, scales to 100% of available viewport width so user sees EVERYTHING WITHOUT SLIDING! */}
         <div
           ref={containerRef}
-          className="p-2 sm:p-6 overflow-y-auto overflow-x-auto bg-slate-200/80 flex justify-center items-start flex-1"
+          className={`p-2 sm:p-5 overflow-y-auto ${
+            isFitScreen ? 'overflow-x-hidden' : 'overflow-x-auto'
+          } bg-slate-200/90 flex justify-center items-start flex-1`}
+          style={{ WebkitOverflowScrolling: 'touch' }}
         >
           <div
-            className="flex justify-center items-start"
+            className="flex justify-center items-start my-auto sm:my-2"
             style={{
-              width: scale < 1 && isFitScreen ? `${680 * scale}px` : 'auto',
-              minWidth: scale < 1 && isFitScreen ? `${680 * scale}px` : undefined,
-              height: scale < 1 && isFitScreen ? `${docHeight * scale}px` : 'auto',
-              overflow: 'visible',
-              transition: 'width 0.2s ease, height 0.2s ease',
+              width: scale < 1 && isFitScreen ? `${Math.ceil(680 * scale)}px` : '680px',
+              minWidth: scale < 1 && isFitScreen ? `${Math.ceil(680 * scale)}px` : '680px',
+              height: scale < 1 && isFitScreen ? `${Math.ceil(docHeight * scale) + 24}px` : `${docHeight + 24}px`,
+              position: 'relative',
+              transition: 'width 0.15s ease, height 0.15s ease',
             }}
           >
             <div
               ref={slipWrapperRef}
-              className="shadow-xl bg-white"
+              className="shadow-2xl bg-white"
               style={{
                 width: '680px',
                 minWidth: '680px',
                 maxWidth: '680px',
+                position: scale < 1 && isFitScreen ? 'absolute' : 'relative',
+                top: 0,
+                left: 0,
                 transform: scale < 1 && isFitScreen ? `scale(${scale})` : 'none',
                 transformOrigin: 'top left',
-                transition: 'transform 0.2s ease',
+                transition: 'transform 0.15s ease',
               }}
             >
               <SlipPreview

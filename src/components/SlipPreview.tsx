@@ -274,35 +274,35 @@ export const SlipPreview: React.FC<SlipPreviewProps> = ({
           {/* Kolom Detail Pemotongan */}
           <div className="divide-y divide-neutral-200">
             <div className="flex items-center px-3 py-1.5">
-              <span className="w-38 sm:w-44 text-neutral-900 font-normal shrink-0">Pinjaman</span>
+              <span className="w-36 sm:w-44 text-neutral-900 font-normal shrink-0">Pinjaman</span>
               <span className="w-3 text-center text-neutral-900 font-normal shrink-0">:</span>
               <span className="flex-1 text-right font-mono font-medium text-neutral-950">
                 {formatRupiah(pinjaman, true)}
               </span>
             </div>
             <div className="flex items-center px-3 py-1.5">
-              <span className="w-38 sm:w-44 text-neutral-900 font-normal shrink-0">BPJS Ketenagakerjaan</span>
+              <span className="w-36 sm:w-44 text-neutral-900 font-normal shrink-0">BPJS Ketenagakerjaan</span>
               <span className="w-3 text-center text-neutral-900 font-normal shrink-0">:</span>
               <span className="flex-1 text-right font-mono font-medium text-neutral-950">
                 {formatRupiah(bpjs, true)}
               </span>
             </div>
             <div className="flex items-center px-3 py-1.5">
-              <span className="w-38 sm:w-44 text-neutral-900 font-normal shrink-0">PPh21</span>
+              <span className="w-36 sm:w-44 text-neutral-900 font-normal shrink-0">PPh21</span>
               <span className="w-3 text-center text-neutral-900 font-normal shrink-0">:</span>
               <span className="flex-1 text-right font-mono font-medium text-neutral-950">
                 {formatRupiah(pph21, true)}
               </span>
             </div>
             <div className="flex items-center px-3 py-1.5">
-              <span className="w-38 sm:w-44 text-neutral-900 font-normal shrink-0">Lain - lain</span>
+              <span className="w-36 sm:w-44 text-neutral-900 font-normal shrink-0">Lain - lain</span>
               <span className="w-3 text-center text-neutral-900 font-normal shrink-0">:</span>
               <span className="flex-1 text-right font-mono font-medium text-neutral-950">
                 {formatRupiah(lainLain, true)}
               </span>
             </div>
             <div className="flex items-center px-3 py-1.5">
-              <span className="w-38 sm:w-44 text-neutral-900 font-normal shrink-0">Uang Makan</span>
+              <span className="w-36 sm:w-44 text-neutral-900 font-normal shrink-0">Uang Makan</span>
               <span className="w-3 text-center text-neutral-900 font-normal shrink-0">:</span>
               <span className="flex-1 text-right font-mono font-medium text-neutral-950">
                 {formatRupiah(uangMakanPotongan, true)}
@@ -325,7 +325,7 @@ export const SlipPreview: React.FC<SlipPreviewProps> = ({
             </span>
           </div>
           <div className="flex items-center px-3 py-2">
-            <span className="w-38 sm:w-44 uppercase tracking-wide shrink-0">TOTAL POTONGAN</span>
+            <span className="w-36 sm:w-44 uppercase tracking-wide shrink-0">TOTAL POTONGAN</span>
             <span className="w-3 text-center shrink-0">:</span>
             <span className="flex-1 text-right font-mono text-neutral-950 font-bold">
               {formatRupiah(totalPotongan)}
