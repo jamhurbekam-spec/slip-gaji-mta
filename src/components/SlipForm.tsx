@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useLayoutEffect } from 'react';
 import { Employee, CompanyProfile, SlipGaji } from '../types';
 import { saveSlip } from '../utils/storage';
 import {
@@ -28,6 +28,88 @@ interface SlipFormProps {
   onCancelEdit?: () => void;
   onDelete?: (id: string) => void;
 }
+
+interface MoneyInputProps {
+  id?: string;
+  label: string;
+  value: number;
+  onChange: (val: number) => void;
+}
+
+// Helper to determine exact cursor position based on digit count
+const getCursorPosFromDigitsCount = (str: string, targetDigitsCount: number): number => {
+  if (targetDigitsCount <= 0) return 0;
+  let digitsSeen = 0;
+  for (let i = 0; i < str.length; i++) {
+    if (/\d/.test(str[i])) {
+      digitsSeen++;
+      if (digitsSeen === targetDigitsCount) {
+        return i + 1;
+      }
+    }
+  }
+  return str.length;
+};
+
+// Declared OUTSIDE SlipForm so React never unmounts the input on re-render.
+// This completely prevents focus loss and prevents Firefox from opening the Find-in-page bar.
+const MoneyInput: React.FC<MoneyInputProps> = React.memo(({ id, label, value, onChange }) => {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const cursorTargetDigitsRef = useRef<number | null>(null);
+
+  // Format with Indonesian thousand separator (.)
+  const displayValue = value === 0 ? '' : value.toLocaleString('id-ID');
+
+  // Maintain precise cursor position after value format update without losing focus
+  useLayoutEffect(() => {
+    if (cursorTargetDigitsRef.current !== null && inputRef.current) {
+      if (document.activeElement === inputRef.current) {
+        const newPos = getCursorPosFromDigitsCount(displayValue, cursorTargetDigitsRef.current);
+        inputRef.current.setSelectionRange(newPos, newPos);
+      }
+      cursorTargetDigitsRef.current = null;
+    }
+  }, [displayValue]);
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const rawValue = e.target.value;
+    const currentCursor = e.target.selectionStart ?? rawValue.length;
+
+    // Count how many digits are before the cursor in the typed string
+    const textBeforeCursor = rawValue.slice(0, currentCursor);
+    const digitsBeforeCursor = (textBeforeCursor.match(/\d/g) || []).length;
+    cursorTargetDigitsRef.current = digitsBeforeCursor;
+
+    // Filter to digits only, enforcing non-negative number
+    const digitsOnly = rawValue.replace(/\D/g, '');
+    const num = digitsOnly ? parseInt(digitsOnly, 10) : 0;
+    onChange(Math.max(0, isNaN(num) ? 0 : num));
+  };
+
+  return (
+    <div>
+      <label htmlFor={id} className="block text-xs font-semibold text-slate-700 mb-1">
+        {label}
+      </label>
+      <div className="relative rounded-lg shadow-2xs">
+        <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-xs font-bold text-slate-400 select-none">
+          Rp
+        </span>
+        <input
+          ref={inputRef}
+          id={id}
+          type="text"
+          inputMode="numeric"
+          autoComplete="off"
+          value={displayValue}
+          onChange={handleChange}
+          placeholder="0"
+          className="block w-full pl-9 pr-3 py-2 text-sm bg-white border border-slate-300 rounded-lg text-slate-900 font-mono focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+        />
+      </div>
+    </div>
+  );
+});
 
 export const SlipForm: React.FC<SlipFormProps> = ({
   employees,
@@ -240,43 +322,6 @@ export const SlipForm: React.FC<SlipFormProps> = ({
     onPreview(currentSlipObject);
   };
 
-  // Helper component for money input with currency format display and non-negative enforcement
-  const MoneyInput = ({
-    label,
-    value,
-    onChange,
-  }: {
-    label: string;
-    value: number;
-    onChange: (val: number) => void;
-  }) => {
-    return (
-      <div>
-        <label className="block text-xs font-semibold text-slate-700 mb-1">
-          {label}
-        </label>
-        <div className="relative rounded-lg shadow-2xs">
-          <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-xs font-bold text-slate-400">
-            Rp
-          </span>
-          <input
-            type="text"
-            inputMode="numeric"
-            value={value === 0 ? '' : value.toLocaleString('id-ID')}
-            onChange={(e) => {
-              // Validasi non-negatif: hanya terima digit angka
-              const digits = e.target.value.replace(/\D/g, '');
-              const num = digits ? parseInt(digits, 10) : 0;
-              onChange(Math.max(0, num));
-            }}
-            placeholder="0"
-            className="block w-full pl-9 pr-3 py-2 text-sm bg-white border border-slate-300 rounded-lg text-slate-900 font-mono focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
-          />
-        </div>
-      </div>
-    );
-  };
-
   return (
     <div className="space-y-5 relative">
       {/* Floating Toast Notification */}
@@ -460,31 +505,37 @@ export const SlipForm: React.FC<SlipFormProps> = ({
 
               <div className="space-y-3">
                 <MoneyInput
+                  id="input-gaji-pokok"
                   label="Gaji Pokok (Otomatis dari Data Karyawan)"
                   value={gajiPokok}
                   onChange={setGajiPokok}
                 />
                 <MoneyInput
+                  id="input-uang-makan-pendapatan"
                   label="Uang Makan"
                   value={uangMakanPendapatan}
                   onChange={setUangMakanPendapatan}
                 />
                 <MoneyInput
+                  id="input-transport"
                   label="Transport"
                   value={transport}
                   onChange={setTransport}
                 />
                 <MoneyInput
+                  id="input-thr"
                   label="THR"
                   value={thr}
                   onChange={setThr}
                 />
                 <MoneyInput
+                  id="input-bonus"
                   label="Bonus"
                   value={bonus}
                   onChange={setBonus}
                 />
                 <MoneyInput
+                  id="input-lemburan"
                   label="Lemburan"
                   value={lemburan}
                   onChange={setLemburan}
@@ -569,26 +620,31 @@ export const SlipForm: React.FC<SlipFormProps> = ({
 
               <div className="space-y-3">
                 <MoneyInput
+                  id="input-pinjaman"
                   label="Pinjaman"
                   value={pinjaman}
                   onChange={setPinjaman}
                 />
                 <MoneyInput
+                  id="input-bpjs"
                   label="BPJS Ketenagakerjaan"
                   value={bpjsKetenagakerjaan}
                   onChange={setBpjsKetenagakerjaan}
                 />
                 <MoneyInput
+                  id="input-pph21"
                   label="PPh21"
                   value={pph21}
                   onChange={setPph21}
                 />
                 <MoneyInput
+                  id="input-lain-lain"
                   label="Lain - lain"
                   value={lainLain}
                   onChange={setLainLain}
                 />
                 <MoneyInput
+                  id="input-uang-makan-potongan"
                   label="Uang Makan (Potongan)"
                   value={uangMakanPotongan}
                   onChange={setUangMakanPotongan}
