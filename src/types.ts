@@ -18,6 +18,7 @@ export interface CompanyProfile {
   ttdUrl?: string; // base64 or object URL
   stempelUrl?: string; // base64 or object URL
   namaPimpinan?: string;
+  tarifLemburPerJam?: number; // default Rp 12.000 / jam
 }
 
 export interface SlipGaji {

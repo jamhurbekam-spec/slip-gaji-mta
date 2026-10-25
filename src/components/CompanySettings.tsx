@@ -18,6 +18,7 @@ import {
   Globe,
   Copy,
   Check,
+  Clock,
 } from 'lucide-react';
 
 interface CompanySettingsProps {
@@ -44,6 +45,9 @@ export const CompanySettings: React.FC<CompanySettingsProps> = ({
   const [kabupatenKota, setKabupatenKota] = useState(company.kabupatenKota || '');
   const [noTelepon, setNoTelepon] = useState(company.noTelepon || '');
   const [namaPimpinan, setNamaPimpinan] = useState(company.namaPimpinan || '');
+  const [tarifLemburPerJam, setTarifLemburPerJam] = useState<number>(
+    company.tarifLemburPerJam !== undefined ? company.tarifLemburPerJam : 12000
+  );
 
   const [logoUrl, setLogoUrl] = useState(company.logoUrl || '');
   const [ttdUrl, setTtdUrl] = useState(company.ttdUrl || '');
@@ -87,6 +91,7 @@ export const CompanySettings: React.FC<CompanySettingsProps> = ({
       kabupatenKota: kabupatenKota.trim(),
       noTelepon: noTelepon.trim(),
       namaPimpinan: namaPimpinan.trim(),
+      tarifLemburPerJam: Math.max(0, tarifLemburPerJam || 0),
       logoUrl,
       ttdUrl,
       stempelUrl,
@@ -198,6 +203,46 @@ export const CompanySettings: React.FC<CompanySettingsProps> = ({
                 className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg text-slate-900 focus:ring-2 focus:ring-blue-500"
               />
             </div>
+          </div>
+        </div>
+
+        {/* Pengaturan Tarif Lembur per Jam */}
+        <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-xs border border-slate-200">
+          <div className="flex items-center gap-2 pb-3 mb-4 border-b border-slate-100">
+            <Clock className="w-5 h-5 text-amber-500" />
+            <div>
+              <h3 className="font-bold text-slate-900 text-sm sm:text-base">
+                Tarif Lembur per Jam
+              </h3>
+              <p className="text-xs text-slate-500">
+                Tentukan nominal upah lembur per jam. Ketika mengisi jam lembur di slip gaji, nominal lembur akan terhitung otomatis.
+              </p>
+            </div>
+          </div>
+
+          <div className="max-w-md">
+            <label className="block text-xs font-semibold text-slate-700 mb-1">
+              Nominal Tarif Lembur per Jam (Rp)
+            </label>
+            <div className="relative rounded-lg shadow-2xs">
+              <span className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-xs font-bold text-slate-400 select-none">
+                Rp
+              </span>
+              <input
+                type="text"
+                inputMode="numeric"
+                value={tarifLemburPerJam === 0 ? '' : tarifLemburPerJam.toLocaleString('id-ID')}
+                onChange={(e) => {
+                  const val = e.target.value.replace(/\D/g, '');
+                  setTarifLemburPerJam(val ? parseInt(val, 10) : 0);
+                }}
+                placeholder="12.000"
+                className="w-full pl-9 pr-3 py-2 text-sm bg-white border border-slate-300 rounded-lg text-slate-900 font-mono focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+            <p className="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
+              Default: <strong>Rp 12.000</strong> per jam. Contoh: 2 jam lembur × Rp {(tarifLemburPerJam || 12000).toLocaleString('id-ID')} = <strong>Rp {(2 * (tarifLemburPerJam || 12000)).toLocaleString('id-ID')}</strong>.
+            </p>
           </div>
         </div>
 

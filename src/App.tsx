@@ -474,6 +474,7 @@ export default function App() {
             slips={slips}
             company={company}
             onViewSlip={handlePreviewSlip}
+            onDeleteSlip={handleDeleteSlip}
             onNavigateToSlip={() => {
               setActiveTab('slip');
               setSlipSubTab('form');

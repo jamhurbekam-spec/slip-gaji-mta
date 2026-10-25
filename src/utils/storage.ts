@@ -24,6 +24,7 @@ const DEFAULT_COMPANY: CompanyProfile = {
   ttdUrl: '',
   stempelUrl: '',
   namaPimpinan: '',
+  tarifLemburPerJam: 12000,
 };
 
 export function getCompanyProfile(): CompanyProfile {

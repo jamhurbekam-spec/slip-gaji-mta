@@ -202,6 +202,27 @@ export const SlipForm: React.FC<SlipFormProps> = ({
     }
   };
 
+  // Tarif lembur per jam dari pengaturan (default: 12000)
+  const tarifLembur =
+    company?.tarifLemburPerJam !== undefined && company.tarifLemburPerJam > 0
+      ? company.tarifLemburPerJam
+      : 12000;
+
+  // Handler perubahan Jam Lembur: otomatis menghitung nominal lemburan
+  const handleJamLemburChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const raw = e.target.value;
+    if (raw === '') {
+      setJamLembur(0);
+      setLemburan(0);
+      return;
+    }
+    const hours = parseFloat(raw);
+    const validHours = Math.max(0, isNaN(hours) ? 0 : hours);
+    setJamLembur(validHours);
+    // Otomatis hitung lemburan: misal 2 jam * 12.000 = 24.000
+    setLemburan(Math.round(validHours * tarifLembur));
+  };
+
   // Real-time automatic calculations
   const totalPendapatan =
     (gajiPokok || 0) +
@@ -536,7 +557,11 @@ export const SlipForm: React.FC<SlipFormProps> = ({
                 />
                 <MoneyInput
                   id="input-lemburan"
-                  label="Lemburan"
+                  label={
+                    jamLembur > 0
+                      ? `Lemburan (Otomatis: ${jamLembur} Jam × ${formatRupiah(tarifLembur)})`
+                      : 'Lemburan'
+                  }
                   value={lemburan}
                   onChange={setLemburan}
                 />
@@ -550,11 +575,9 @@ export const SlipForm: React.FC<SlipFormProps> = ({
                       <input
                         type="number"
                         min="0"
+                        step="any"
                         value={jamLembur || ''}
-                        onChange={(e) => {
-                          const val = parseInt(e.target.value || '0', 10);
-                          setJamLembur(Math.max(0, isNaN(val) ? 0 : val));
-                        }}
+                        onChange={handleJamLemburChange}
                         placeholder="0"
                         className="w-full px-3 py-2 text-sm bg-white border border-slate-300 rounded-lg text-slate-900 font-mono focus:ring-2 focus:ring-blue-500"
                       />
@@ -562,6 +585,9 @@ export const SlipForm: React.FC<SlipFormProps> = ({
                         Jam
                       </span>
                     </div>
+                    <span className="text-[10px] text-slate-500 block mt-1">
+                      Tarif: {formatRupiah(tarifLembur)} / jam
+                    </span>
                   </div>
 
                   <div>

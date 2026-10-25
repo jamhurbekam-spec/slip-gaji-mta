@@ -243,6 +243,7 @@ export const SlipList: React.FC<SlipListProps> = ({
         onClose={() => setIsRekapOpen(false)}
         slips={slips}
         company={company}
+        onDeleteSlip={onDelete}
       />
     </div>
   );
