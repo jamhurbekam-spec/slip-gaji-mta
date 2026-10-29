@@ -24,14 +24,18 @@ export const Navbar: React.FC<NavbarProps> = ({
       <header className="sticky top-0 z-30 bg-slate-900 text-white shadow-md border-b border-slate-800">
         <div className="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
           <div className="flex items-center gap-2.5">
-            {/* Minimalist Professional App Icon */}
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-700 via-blue-600 to-indigo-500 flex items-center justify-center shadow-xs border border-blue-400/30">
-              <Receipt className="w-5 h-5 text-white" />
+            {/* Logo MTA CV. Mulia Tekhnik Abadi */}
+            <div className="h-9 px-2 rounded-xl bg-white flex items-center justify-center shadow-xs border border-slate-300 shrink-0">
+              <img
+                src="/logo_mta.png"
+                alt="Logo MTA"
+                className="h-6 w-auto object-contain"
+              />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h1 className="text-base font-extrabold tracking-tight leading-none text-white">
-                  Slip Gaji MTA
+                <h1 className="text-base font-extrabold tracking-wider leading-none text-white uppercase">
+                  SLIP GAJI MTA
                 </h1>
                 <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-950/90 text-emerald-400 border border-emerald-500/30">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>

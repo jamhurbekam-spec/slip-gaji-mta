@@ -163,15 +163,15 @@ export const RekapModal: React.FC<RekapModalProps> = ({
         {/* Modal Header */}
         <div className="flex items-center justify-between px-4 py-3 bg-slate-900 text-white border-b border-slate-800">
           <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center font-bold text-white shadow-xs">
-              <FileSpreadsheet className="w-4 h-4" />
+            <div className="h-8 px-1.5 rounded-lg bg-white flex items-center justify-center shrink-0 border border-slate-300">
+              <img src="/logo_mta.png" alt="Logo MTA" className="h-5 w-auto object-contain" />
             </div>
             <div>
-              <h2 className="text-sm sm:text-base font-bold leading-tight">
-                Rekap Gaji Karyawan
+              <h2 className="text-sm sm:text-base font-extrabold uppercase tracking-wide leading-tight text-white">
+                REKAP GAJI KARYAWAN
               </h2>
               <p className="text-xs text-slate-300">
-                {company.namaPerusahaan || 'Slip Gaji MTA'} • {filteredSlips.length} Data Slip
+                {company.namaPerusahaan || 'SLIP GAJI MTA'} • {filteredSlips.length} Data Slip
               </p>
             </div>
           </div>

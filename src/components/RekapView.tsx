@@ -174,12 +174,12 @@ export const RekapView: React.FC<RekapViewProps> = ({
       {/* Top Header Card */}
       <div className="bg-white rounded-2xl p-4 sm:p-5 border border-slate-200 shadow-2xs flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-            <FileSpreadsheet className="w-5 h-5" />
+          <div className="h-10 px-2 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-center shrink-0">
+            <img src="/logo_mta.png" alt="Logo MTA" className="h-6 w-auto object-contain" />
           </div>
           <div>
-            <h2 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">
-              Rekapitulasi Gaji Karyawan
+            <h2 className="text-base sm:text-lg font-extrabold uppercase tracking-wide text-slate-900 leading-tight">
+              REKAPITULASI GAJI KARYAWAN
             </h2>
           </div>
         </div>

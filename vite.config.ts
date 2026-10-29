@@ -14,8 +14,8 @@ export default defineConfig(() => {
         includeAssets: ['apple-touch-icon.png', 'icon.svg'],
         manifest: {
           id: '/',
-          name: 'Slip Gaji MTA',
-          short_name: 'SlipGaji',
+          name: 'SLIP GAJI MTA',
+          short_name: 'SLIP GAJI MTA',
           description: 'Aplikasi pembuatan dan cetak slip gaji karyawan profesional.',
           theme_color: '#1e293b',
           background_color: '#f8fafc',

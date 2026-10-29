@@ -75,7 +75,7 @@ export const SlipPreview: React.FC<SlipPreviewProps> = ({
             className="p-3 sm:p-3.5 flex flex-col justify-center items-start"
             style={{ boxSizing: 'border-box' }}
           >
-            {company.logoUrl ? (
+            {company.logoUrl || true ? (
               <div
                 className="overflow-hidden flex items-center justify-start mb-2"
                 style={{
@@ -87,7 +87,7 @@ export const SlipPreview: React.FC<SlipPreviewProps> = ({
                 }}
               >
                 <img
-                  src={company.logoUrl}
+                  src={company.logoUrl || '/logo_mta.png'}
                   alt="Logo Perusahaan"
                   className="object-contain block"
                   style={{

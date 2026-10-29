@@ -23,12 +23,12 @@ export const PWAInstallBanner: React.FC = () => {
       <div className="bg-gradient-to-r from-blue-700 via-indigo-700 to-blue-800 text-white px-4 py-2.5 shadow-md border-b border-blue-600/50">
         <div className="max-w-4xl mx-auto flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 min-w-0">
-            <div className="w-8 h-8 rounded-lg bg-white/15 flex items-center justify-center shrink-0 border border-white/20">
-              <Smartphone className="w-4 h-4 text-white" />
+            <div className="h-8 px-1.5 rounded-lg bg-white flex items-center justify-center shrink-0 border border-white/40">
+              <img src="/logo_mta.png" alt="Logo MTA" className="h-5 w-auto object-contain" />
             </div>
             <div className="min-w-0">
-              <p className="text-xs sm:text-sm font-bold truncate text-white leading-tight">
-                Pasang Aplikasi Slip Gaji MTA
+              <p className="text-xs sm:text-sm font-bold truncate text-white leading-tight uppercase tracking-wide">
+                Pasang Aplikasi SLIP GAJI MTA
               </p>
               <p className="text-[11px] text-blue-100 hidden sm:block truncate">
                 Akses cepat langsung dari layar utama HP / Laptop tanpa buka browser!

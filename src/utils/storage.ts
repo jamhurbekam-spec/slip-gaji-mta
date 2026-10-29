@@ -15,12 +15,12 @@ const STORAGE_KEYS = {
 
 // Company Profile: Defaults to completely empty strings (NO DUMMY DATA)
 const DEFAULT_COMPANY: CompanyProfile = {
-  namaPerusahaan: '',
-  alamat: '',
-  kecamatan: '',
-  kabupatenKota: '',
+  namaPerusahaan: 'CV. MULIA TEKHNIK ABADI',
+  alamat: 'Jl. Letda Nasir No. 58 Cikeas Udik',
+  kecamatan: 'Gunung Putri',
+  kabupatenKota: 'Bogor',
   noTelepon: '',
-  logoUrl: '',
+  logoUrl: '/logo_mta.png',
   ttdUrl: '',
   stempelUrl: '',
   namaPimpinan: '',
@@ -31,7 +31,13 @@ export function getCompanyProfile(): CompanyProfile {
   try {
     const raw = localStorage.getItem(STORAGE_KEYS.COMPANY);
     if (!raw) return { ...DEFAULT_COMPANY };
-    return { ...DEFAULT_COMPANY, ...JSON.parse(raw) };
+    const parsed = JSON.parse(raw);
+    return {
+      ...DEFAULT_COMPANY,
+      ...parsed,
+      logoUrl: parsed.logoUrl || '/logo_mta.png',
+      namaPerusahaan: parsed.namaPerusahaan || 'CV. MULIA TEKHNIK ABADI',
+    };
   } catch (e) {
     console.error('Error reading company profile from storage:', e);
     return { ...DEFAULT_COMPANY };

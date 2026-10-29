@@ -47,7 +47,7 @@ export const CompanySettings: React.FC<CompanySettingsProps> = ({
     company.tarifLemburPerJam !== undefined ? company.tarifLemburPerJam : 12000
   );
 
-  const [logoUrl, setLogoUrl] = useState(company.logoUrl || '');
+  const [logoUrl, setLogoUrl] = useState(company.logoUrl || '/logo_mta.png');
   const [ttdUrl, setTtdUrl] = useState(company.ttdUrl || '');
   const [stempelUrl, setStempelUrl] = useState(company.stempelUrl || '');
 
@@ -499,7 +499,7 @@ export const CompanySettings: React.FC<CompanySettingsProps> = ({
               </span>
             </div>
             <p className="text-xs text-slate-300 mt-0.5">
-              Aplikasi Slip Gaji MTA dikembangkan oleh <strong>Jamhur</strong> untuk mempermudah perhitungan, cetak, dan rekapitulasi gaji karyawan.
+              Aplikasi <strong>SLIP GAJI MTA</strong> dikembangkan oleh <strong>Jamhur</strong> untuk mempermudah perhitungan, cetak, dan rekapitulasi gaji karyawan.
             </p>
           </div>
         </div>
