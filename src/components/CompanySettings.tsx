@@ -12,13 +12,11 @@ import {
   HelpCircle,
   Download,
   UploadCloud,
-  Cloud,
-  RefreshCw,
-  ExternalLink,
-  Globe,
   Copy,
   Check,
   Clock,
+  Coffee,
+  Heart,
 } from 'lucide-react';
 
 interface CompanySettingsProps {
@@ -38,7 +36,7 @@ export const CompanySettings: React.FC<CompanySettingsProps> = ({
   onManualSyncOnline,
   isSyncingOnline = false,
 }) => {
-  const [copiedUrl, setCopiedUrl] = useState(false);
+  const [copiedGopay, setCopiedGopay] = useState(false);
   const [namaPerusahaan, setNamaPerusahaan] = useState(company.namaPerusahaan || '');
   const [alamat, setAlamat] = useState(company.alamat || '');
   const [kecamatan, setKecamatan] = useState(company.kecamatan || '');
@@ -214,9 +212,6 @@ export const CompanySettings: React.FC<CompanySettingsProps> = ({
               <h3 className="font-bold text-slate-900 text-sm sm:text-base">
                 Tarif Lembur per Jam
               </h3>
-              <p className="text-xs text-slate-500">
-                Tentukan nominal upah lembur per jam. Ketika mengisi jam lembur di slip gaji, nominal lembur akan terhitung otomatis.
-              </p>
             </div>
           </div>
 
@@ -240,9 +235,6 @@ export const CompanySettings: React.FC<CompanySettingsProps> = ({
                 className="w-full pl-9 pr-3 py-2 text-sm bg-white border border-slate-300 rounded-lg text-slate-900 font-mono focus:ring-2 focus:ring-blue-500"
               />
             </div>
-            <p className="text-[11px] text-slate-500 mt-1.5 leading-relaxed">
-              Default: <strong>Rp 12.000</strong> per jam. Contoh: 2 jam lembur × Rp {(tarifLemburPerJam || 12000).toLocaleString('id-ID')} = <strong>Rp {(2 * (tarifLemburPerJam || 12000)).toLocaleString('id-ID')}</strong>.
-            </p>
           </div>
         </div>
 
@@ -252,9 +244,6 @@ export const CompanySettings: React.FC<CompanySettingsProps> = ({
             <h3 className="font-bold text-slate-900 text-sm sm:text-base">
               Upload Gambar (Logo, TTD, & Stempel Toko)
             </h3>
-            <p className="text-xs text-slate-500">
-              Pilih gambar dari galeri HP. Format PNG transparan direkomendasikan agar TTD dan stempel menyatu alami.
-            </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
@@ -449,14 +438,11 @@ export const CompanySettings: React.FC<CompanySettingsProps> = ({
       {/* Cadangkan & Pulihkan Data */}
       {(onExportData || onImportData) && (
         <div className="bg-white rounded-2xl p-4 sm:p-6 shadow-xs border border-slate-200">
-          <div className="flex items-center gap-2 pb-2 mb-3 border-b border-slate-100">
+          <div className="flex items-center gap-2 pb-2 mb-4 border-b border-slate-100">
             <h3 className="font-bold text-slate-900 text-xs sm:text-sm">
               Cadangkan & Pulihkan Data Lokal (Backup)
             </h3>
           </div>
-          <p className="text-xs text-slate-500 mb-4">
-            Semua data karyawan, slip gaji, dan profil perusahaan tersimpan secara lokal di memori HP/browser Anda. Anda dapat mengunduh salinan cadangan kapan saja.
-          </p>
 
           <div className="flex flex-wrap items-center gap-3">
             {onExportData && (
@@ -496,94 +482,76 @@ export const CompanySettings: React.FC<CompanySettingsProps> = ({
         </div>
       )}
 
-      {/* Cloud Firestore Online Storage & Deployment Guide */}
-      <div className="bg-gradient-to-br from-slate-900 to-slate-800 text-white rounded-2xl p-4 sm:p-6 shadow-md border border-slate-700 space-y-4">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-3 border-b border-slate-700/80">
-          <div className="flex items-center gap-2.5">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/20 border border-emerald-400/30 flex items-center justify-center text-emerald-400">
-              <Cloud className="w-5 h-5" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="font-bold text-white text-sm sm:text-base">
-                  Penyimpanan Online Cloud Firestore
-                </h3>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                  AKTIF ONLINE
-                </span>
-              </div>
-              <p className="text-xs text-slate-300">
-                Data slip gaji, data karyawan, dan profil tersimpan otomatis ke database Google Cloud
-              </p>
-            </div>
+      {/* Tentang Pengembang & Bagi Kopi */}
+      <div className="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white rounded-2xl p-5 sm:p-6 shadow-md border border-slate-700 space-y-4">
+        <div className="flex items-center gap-3 pb-3 border-b border-slate-700/80">
+          <div className="w-11 h-11 rounded-2xl bg-amber-500/20 border border-amber-400/30 flex items-center justify-center text-amber-400 shrink-0 shadow-inner">
+            <Coffee className="w-6 h-6" />
           </div>
-
-          {onManualSyncOnline && (
-            <button
-              type="button"
-              disabled={isSyncingOnline}
-              onClick={onManualSyncOnline}
-              className="inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-emerald-600 hover:bg-emerald-500 active:scale-95 text-white text-xs font-bold rounded-xl transition-all disabled:opacity-50"
-            >
-              <RefreshCw className={`w-3.5 h-3.5 ${isSyncingOnline ? 'animate-spin' : ''}`} />
-              <span>{isSyncingOnline ? 'Menyinkronkan...' : 'Sinkronkan Sekarang'}</span>
-            </button>
-          )}
-        </div>
-
-        {/* Info Detail Database */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs">
-          <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
-            <span className="text-slate-400 block mb-0.5">Database Cloud ID:</span>
-            <span className="font-mono text-emerald-400 font-semibold text-[11px] break-all">
-              ai-studio-slipgajimta-03a87b52-4102-4a7e-af14-e6f0be8b2e77
-            </span>
-          </div>
-          <div className="bg-slate-800/80 p-3 rounded-xl border border-slate-700">
-            <span className="text-slate-400 block mb-0.5">Sinkronisasi Realtime:</span>
-            <span className="text-slate-200 font-medium">
-              Aktif (Setiap penambahan, edit, atau hapus otomatis tersimpan online)
-            </span>
+          <div>
+            <div className="flex items-center gap-2">
+              <h3 className="font-bold text-white text-base sm:text-lg">
+                Tentang Pengembang
+              </h3>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">
+                <Heart className="w-3 h-3 text-rose-400 fill-rose-400" />
+                Developer
+              </span>
+            </div>
+            <p className="text-xs text-slate-300 mt-0.5">
+              Aplikasi Slip Gaji MTA dikembangkan oleh <strong>Jamhur</strong> untuk mempermudah perhitungan, cetak, dan rekapitulasi gaji karyawan.
+            </p>
           </div>
         </div>
 
-        {/* Panduan Akses & Deploy Aplikasi */}
-        <div className="pt-2 border-t border-slate-700/80">
-          <div className="flex items-center gap-1.5 text-xs font-bold text-slate-200 mb-2">
-            <Globe className="w-4 h-4 text-blue-400" />
-            <span>Akses Aplikasi Online & Link Berbagi:</span>
-          </div>
-          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
-            <div className="flex-1 bg-slate-950 px-3 py-2 rounded-xl border border-slate-700 font-mono text-[11px] text-slate-300 truncate">
-              {window.location.origin}
+        {/* Kotak Bagi Kopi GoPay */}
+        <div className="bg-slate-950/70 rounded-xl p-4 sm:p-5 border border-amber-500/40 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4">
+          <div className="space-y-1.5">
+            <div className="flex items-center gap-2 text-amber-400 font-bold text-sm">
+              <Coffee className="w-4 h-4" />
+              <span>Dukung Pengembang / Bagi Kopi</span>
             </div>
+            <p className="text-xs sm:text-sm text-slate-200">
+              Bagi kopi ke GoPay <strong className="text-amber-300 font-mono text-sm sm:text-base">08179015181</strong> an <strong className="text-white">Jamhur</strong>
+            </p>
+            <div className="flex flex-wrap items-center gap-2 pt-1">
+              <span className="inline-flex items-center px-2.5 py-1 rounded-lg bg-emerald-950 border border-emerald-500/40 text-emerald-300 font-mono font-bold text-xs sm:text-sm">
+                GoPay: 08179015181
+              </span>
+              <span className="text-xs text-slate-400 font-medium">
+                a.n. <strong className="text-slate-200">Jamhur</strong>
+              </span>
+            </div>
+          </div>
+
+          <div className="flex items-center">
             <button
               type="button"
               onClick={() => {
-                navigator.clipboard.writeText(window.location.origin);
-                setCopiedUrl(true);
-                setTimeout(() => setCopiedUrl(false), 2000);
+                navigator.clipboard.writeText('08179015181');
+                setCopiedGopay(true);
+                setTimeout(() => setCopiedGopay(false), 2500);
               }}
-              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-slate-700 hover:bg-slate-600 text-white rounded-xl text-xs font-semibold transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 active:scale-95 text-slate-950 font-bold text-xs sm:text-sm rounded-xl shadow-md shadow-amber-500/20 transition-all"
             >
-              {copiedUrl ? (
+              {copiedGopay ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-emerald-400" />
-                  <span className="text-emerald-400">Tersalin!</span>
+                  <Check className="w-4 h-4 text-slate-950" />
+                  <span>Nomor Tersalin!</span>
                 </>
               ) : (
                 <>
-                  <Copy className="w-3.5 h-3.5" />
-                  <span>Salin Link Aplikasi</span>
+                  <Copy className="w-4 h-4 text-slate-950" />
+                  <span>Salin No. GoPay</span>
                 </>
               )}
             </button>
           </div>
-          <p className="text-[11px] text-slate-400 mt-2 leading-relaxed">
-            Aplikasi ini sudah dideploy dan berjalan di cloud server Google Cloud Run. Anda dapat langsung membuka link di atas melalui browser Chrome di HP Android atau Laptop kapan saja tanpa instalasi tambahan.
-          </p>
         </div>
+
+        <p className="text-[11px] text-slate-400 text-center sm:text-left leading-relaxed">
+          Apresiasi dan dukungan Anda sangat berarti untuk terus merawat dan menyempurnakan aplikasi ini. Terima kasih banyak!
+        </p>
       </div>
     </div>
   );

@@ -181,9 +181,6 @@ export const RekapView: React.FC<RekapViewProps> = ({
             <h2 className="text-base sm:text-lg font-bold text-slate-900 leading-tight">
               Rekapitulasi Gaji Karyawan
             </h2>
-            <p className="text-xs text-slate-500">
-              Download laporan rekapitulasi slip gaji ke file Excel (CSV) atau cetak ke PDF
-            </p>
           </div>
         </div>
 

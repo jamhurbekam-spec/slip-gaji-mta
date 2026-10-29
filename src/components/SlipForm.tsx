@@ -390,9 +390,6 @@ export const SlipForm: React.FC<SlipFormProps> = ({
                 <h3 className="text-sm sm:text-base font-bold text-slate-900">
                   Identitas Slip Gaji
                 </h3>
-                <p className="text-xs text-slate-500">
-                  Pilih data karyawan tersimpan atau isi secara langsung
-                </p>
               </div>
             </div>
 

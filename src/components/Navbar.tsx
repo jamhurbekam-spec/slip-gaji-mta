@@ -38,9 +38,6 @@ export const Navbar: React.FC<NavbarProps> = ({
                   <span>{isOnline ? 'Cloud Online' : 'Lokal'}</span>
                 </span>
               </div>
-              <p className="text-[11px] text-slate-400 font-medium">
-                Pembuat Slip Gaji Karyawan
-              </p>
             </div>
           </div>
 
